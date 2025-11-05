@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Complaint & Suggestion Kiosk</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: rgba(0, 64, 128, 0.9);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    button {
+      padding: 10px 20px;
+      background: #004080;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #003060;
+    }
+    section {
+      display: none;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    section.active {
+      display: block;
+    }
+    label, select, input, textarea {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Campus Complaint & Suggestion Kiosk</h1>
+    <p>College Timing: 10:00 AM to 5:00 PM</p>
+  </header>
+
+  <nav>
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('complaint')">Complaint</button>
+    <button onclick="showSection('suggestion')">Suggestion</button>
+    <button onclick="showSection('sectionInfo')">Section Info</button>
+  </nav>
+
+  <section id="home" class="active">
+    <h2>Welcome to the Campus Kiosk</h2>
+    <p>Use this system to submit complaints, suggestions, and view section-wise details.</p>
+  </section>
+
+  <section id="complaint">
+    <h2>Submit a Complaint</h2>
+    <form id="complaintForm">
+      <label>Name:</label>
+      <input type="text" id="name" required />
+
+      <label>Branch:</label>
+      <input type="text" id="branch" required />
+
+      <label>Academic Year:</label>
+      <select id="year" required>
+        <option value="">--Select Year--</option>
+        <option value="FE">First Year (FE)</option>
+        <option value="SE">Second Year (SE)</option>
+        <option value="TE">Third Year (TE)</option>
+        <option value="BE">Final Year (BE)</option>
+      </select>
+
+      <label>Division:</label>
+      <input type="text" id="division" required />
+
+      <label>Roll Number:</label>
+      <input type="text" id="roll" required />
+
+      <label>Select Complaint Type:</label>
+      <select id="type" required>
+        <option value="">--Select--</option>
+        <option value="wifi">WiFi Connection Problem</option>
+        <option value="electricity">Electricity Issue</option>
+        <option value="water">Water Problem</option>
+        <option value="cleanliness">Cleanliness</option>
+        <option value="furniture">Furniture Damage</option>
+        <option value="labs">Lab Equipment Issue</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label>Description:</label>
+      <textarea id="desc" required></textarea>
+
+      <button type="submit">Submit Complaint</button>
+    </form>
+    <p id="complaintMessage"></p>
+  </section>
+
+  <section id="suggestion">
+    <h2>Submit a Suggestion</h2>
+    <form id="suggestionForm">
+      <label>Name:</label>
+      <input type="text" id="sugName" required />
+
+      <label>Branch:</label>
+      <input type="text" id="sugBranch" required />
+
+      <label>Academic Year:</label>
+      <select id="sugYear" required>
+        <option value="">--Select Year--</option>
+        <option value="FE">First Year (FE)</option>
+        <option value="SE">Second Year (SE)</option>
+        <option value="TE">Third Year (TE)</option>
+        <option value="BE">Final Year (BE)</option>
+      </select>
+
+      <label>Division:</label>
+      <input type="text" id="sugDivision" required />
+
+      <label>Roll Number:</label>
+      <input type="text" id="sugRoll" required />
+
+      <label>Your Suggestion:</label>
+      <textarea id="sugText" required placeholder="E.g. Add more library books, improve WiFi, arrange workshops..."></textarea>
+
+      <button type="submit">Submit Suggestion</button>
+    </form>
+    <p id="suggestionMessage"></p>
+  </section>
+
+  <section id="sectionInfo">
+    <h2>Section Information</h2>
+    <label>Select Semester:</label>
+    <select id="sectionSelect">
+      <option value="">--Select--</option>
+      <option value="sem1">1st Semester</option>
+      <option value="sem2">2nd Semester</option>
+      <option value="sem3">3rd Semester</option>
+      <option value="sem4">4th Semester</option>
+      <option value="sem5">5th Semester</option>
+      <option value="sem6">6th Semester</option>
+      <option value="sem7">7th Semester</option>
+      <option value="sem8">8th Semester</option>
+    </select>
+    <div id="sectionDetails"></div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.getElementById("complaintForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const branch = document.getElementById("branch").value;
+      const year = document.getElementById("year").value;
+      const division = document.getElementById("division").value;
+      const roll = document.getElementById("roll").value;
+      const type = document.getElementById("type").value;
+      const desc = document.getElementById("desc").value;
+
+      if(name && branch && year && division && roll && type && desc) {
+        document.getElementById("complaintMessage").innerText = "Complaint submitted successfully!";
+        this.reset();
+      } else {
+        document.getElementById("complaintMessage").innerText = "Please fill all fields.";
+      }
+    });
+
+    document.getElementById("suggestionForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("sugName").value;
+      const branch = document.getElementById("sugBranch").value;
+      const year = document.getElementById("sugYear").value;
+      const division = document.getElementById("sugDivision").value;
+      const roll = document.getElementById("sugRoll").value;
+      const text = document.getElementById("sugText").value;
+
+      if(name && branch && year && division && roll && text) {
+        document.getElementById("suggestionMessage").innerText = "Suggestion submitted successfully!";
+        this.reset();
+      } else {
+        document.getElementById("suggestionMessage").innerText = "Please fill all fields.";
+      }
+    });
+
+    const sectionData = {
+      sem1: "Timetable: 10am - 5pm, Class Teacher: Prof. A",
+      sem2: "Timetable: 10am - 5pm, Class Teacher: Prof. B",
+      sem3: "Timetable: 10am - 5pm, Class Teacher: Prof. C",
+      sem4: "Timetable: 10am - 5pm, Class Teacher: Prof. D",
+      sem5: "Timetable: 10am - 5pm, Class Teacher: Prof. E",
+      sem6: "Timetable: 10am - 5pm, Class Teacher: Prof. F",
+      sem7: "Timetable: 10am - 5pm, Class Teacher: Prof. G",
+      sem8: "Timetable: 10am - 5pm, Class Teacher: Prof. H",
+    };
+
+    document.getElementById("sectionSelect").addEventListener("change", function() {
+      const val = this.value;
+      document.getElementById("sectionDetails").innerText = sectionData[val] || "";
+    });
+  </script>
+</body>
+</html>
